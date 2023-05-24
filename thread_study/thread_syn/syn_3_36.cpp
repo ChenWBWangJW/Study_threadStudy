@@ -1,16 +1,16 @@
 /****************************************
-*ÒªÇó£º
-*	¶ÁĞ´Ëø»¥³âËøËÙ¶È±È½Ï
-*Ïê½â£º
-*	ÔËĞĞ½á¹û
+*è¦æ±‚ï¼š
+*	è¯»å†™é”äº’æ–¥é”é€Ÿåº¦æ¯”è¾ƒ
+*è¯¦è§£ï¼š
+*	è¿è¡Œç»“æœ
 *	total mutex time:1729 ms
 *	total rwlock time:2835 ms
-*	¿ÉÒÔ¿´µ½¶ÁĞ´ËùµÄÓÅÊÆ²¢²»ÔÚËÙ¶ÈÉÏ£¬¶øÊÇ
-*	ÔÚÓÚ¶ÁĞ´ËøµÄ¶ÁËø¿ÉÒÔ±»¶à¸öÏß³ÌÍ¬Ê±³ÖÓĞ
-*	£¬¶ø»¥³âËøÖ»ÄÜ±»Ò»¸öÏß³Ì³ÖÓĞ£¬ÕâÑù¾Í¿ÉÒÔ
-*	Ìá¸ß³ÌĞòµÄ²¢·¢ĞÔ¡£
-* ¸½Â¼£º
-*	»ñÈ¡ÔËĞĞÊ±¼äµÄ·½·¨
+*	å¯ä»¥çœ‹åˆ°è¯»å†™æ‰€çš„ä¼˜åŠ¿å¹¶ä¸åœ¨é€Ÿåº¦ä¸Šï¼Œè€Œæ˜¯
+*	åœ¨äºè¯»å†™é”çš„è¯»é”å¯ä»¥è¢«å¤šä¸ªçº¿ç¨‹åŒæ—¶æŒæœ‰
+*	ï¼Œè€Œäº’æ–¥é”åªèƒ½è¢«ä¸€ä¸ªçº¿ç¨‹æŒæœ‰ï¼Œè¿™æ ·å°±å¯ä»¥
+*	æé«˜ç¨‹åºçš„å¹¶å‘æ€§ã€‚
+* é™„å½•ï¼š
+*	è·å–è¿è¡Œæ—¶é—´çš„æ–¹æ³•
 * 
 *	#include<sys/time.h>
 *	......
@@ -19,7 +19,7 @@
 *	struct timeval end;
 * 	gettimeofday(&start, NULL);
 *	{
-*		±»¼ÆËãÊ±¼ä´úÂë¿é......
+*		è¢«è®¡ç®—æ—¶é—´ä»£ç å—......
 *	}
 *	gettimeofday(&end, NULL);
 *	long long total_time = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
@@ -109,21 +109,25 @@ int mutexVar(void)
 	if (err != 0)
 	{
 		printf("create new thread error:%s\n", strerror(err));
+		exit(0);
 	}
 	err = pthread_create(&th2, NULL, ThreadB, (void*)0);
 	if (err != 0)
 	{
 		printf("create new thread error:%s\n", strerror(err));
+		exit(0);
 	}
 	err = pthread_join(th1, NULL);
 	if (err != 0)
 	{
 		printf("wait thread done error:%s\n", strerror(err));
+		exit(1);
 	}
 	err = pthread_join(th2, NULL);
 	if (err != 0)
 	{
 		printf("wait thread done error:%s\n", strerror(err));
+		exit(1);
 	}
 
 	gettimeofday(&end, NULL);
@@ -155,21 +159,25 @@ int rdlockVer(void)
 	if (err != 0)
 	{
 		printf("create new thread error:%s\n", strerror(err));
+		exit(0);
 	}
 	err = pthread_create(&th2, NULL, ThreadD, (void*)0);
 	if (err != 0)
 	{
 		printf("create new thread error:%s\n", strerror(err));
+		exit(0);
 	}
 	err = pthread_join(th1, NULL);
 	if (err != 0)
 	{
 		printf("wait thread done error:%s\n", strerror(err));
+		exit(1);
 	}
 	err = pthread_join(th2, NULL);
 	if (err != 0)
 	{
 		printf("wait thread done error:%s\n", strerror(err));
+		exit(1);
 	}
 
 	gettimeofday(&end, NULL);
