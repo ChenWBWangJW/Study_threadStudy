@@ -34,3 +34,35 @@ syn_3_35.cpp
 *	通过互斥锁确保全局变量在被某个线程调用
 *	时不会被其他线程打断
 *****************************************/
+
+
+syn_3_36.cpp
+/****************************************
+*要求：
+*	读写锁互斥锁速度比较
+*详解：
+*	运行结果
+*	total mutex time:1729 ms
+*	total rwlock time:2835 ms
+*	可以看到读写所的优势并不在速度上，而是
+*	在于读写锁的读锁可以被多个线程同时持有
+*	，而互斥锁只能被一个线程持有，这样就可以
+*	提高程序的并发性。
+*附录：
+*	获取运行时间的方法
+* 
+*	#include<sys/time.h>
+*	......
+*	struct timeval start;
+*	clock_t t1, t2;
+*	struct timeval end;
+* 	gettimeofday(&start, NULL);
+*	{
+*		被计算时间代码块......
+*	}
+*	gettimeofday(&end, NULL);
+*	long long total_time = (end.tv_sec - start.tv_sec) * 1000000 + (end.tv_usec - start.tv_usec);
+*	total_time /= 1000;
+*	printf("total time:%lld ms\n", total_time);
+*	......
+*****************************************/
