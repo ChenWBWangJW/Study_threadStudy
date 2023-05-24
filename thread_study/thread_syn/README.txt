@@ -66,3 +66,35 @@ syn_3_36.cpp
 *	printf("total time:%lld ms\n", total_time);
 *	......
 *****************************************/
+
+
+syn_3_37.cpp
+/****************************************
+*要求：
+*	找出1-20中能整除3的数
+*详解：
+*	thread1获取互斥锁mutex并判断i是否能被
+*	3整除，如果能，则调用signal唤醒thread2
+*	，thread2判定i能被三整除，则不进入if判
+*	断语句执行printf函数，然后i++后再进行
+*	判定，这次判定i不能被3整除，进入if，调
+*	用wait等待thread1唤醒，不执行thread2后
+*	的printf语句。thread1唤醒后，进行判断
+* 	，i能被3整除，进入if，调用signal唤醒
+*	thread2，thread2执行后面printf语句，
+*	以此循环。
+* 附录：
+*	//条件变量和互斥锁的初始化、销毁、加锁、解锁、条件变量的初始化、销毁、唤醒、等待
+*	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
+*	pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
+* 
+*	//条件变量和互斥锁的释放
+*	pthread_mutex_destroy(&mutex);
+*	pthread_cond_destroy(&cond);
+* 
+*	//条件变量和互斥锁的加锁
+*	pthread_cond_signal(&cond);
+* 
+*	//条件变量和互斥锁的解锁
+*	pthread_cond_wait(&cond);
+*****************************************/
