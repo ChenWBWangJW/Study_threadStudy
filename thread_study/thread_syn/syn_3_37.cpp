@@ -1,29 +1,29 @@
 /****************************************
-*ÒªÇó£º
-*	ÕÒ³ö1-20ÖÐÄÜÕû³ý3µÄÊý
-*Ïê½â£º
-*	thread1»ñÈ¡»¥³âËømutex²¢ÅÐ¶ÏiÊÇ·ñÄÜ±»
-*	3Õû³ý£¬Èç¹ûÄÜ£¬Ôòµ÷ÓÃsignal»½ÐÑthread2
-*	£¬thread2ÅÐ¶¨iÄÜ±»ÈýÕû³ý£¬Ôò²»½øÈëifÅÐ
-*	¶ÏÓï¾äÖ´ÐÐprintfº¯Êý£¬È»ºói++ºóÔÙ½øÐÐ
-*	ÅÐ¶¨£¬Õâ´ÎÅÐ¶¨i²»ÄÜ±»3Õû³ý£¬½øÈëif£¬µ÷
-*	ÓÃwaitµÈ´ýthread1»½ÐÑ£¬²»Ö´ÐÐthread2ºó
-*	µÄprintfÓï¾ä¡£thread1»½ÐÑºó£¬½øÐÐÅÐ¶Ï
-* 	£¬iÄÜ±»3Õû³ý£¬½øÈëif£¬µ÷ÓÃsignal»½ÐÑ
-*	thread2£¬ÒÔ´ËÑ­»·¡£
-* ¸½Â¼£º
-*	//Ìõ¼þ±äÁ¿ºÍ»¥³âËøµÄ³õÊ¼»¯¡¢Ïú»Ù¡¢¼ÓËø¡¢½âËø¡¢Ìõ¼þ±äÁ¿µÄ³õÊ¼»¯¡¢Ïú»Ù¡¢»½ÐÑ¡¢µÈ´ý
+*è¦æ±‚ï¼š
+*	æ‰¾å‡º1-20ä¸­èƒ½æ•´é™¤3çš„æ•°
+*è¯¦è§£ï¼š
+*	thread1èŽ·å–äº’æ–¥é”mutexå¹¶åˆ¤æ–­iæ˜¯å¦èƒ½è¢«
+*	3æ•´é™¤ï¼Œå¦‚æžœèƒ½ï¼Œåˆ™è°ƒç”¨signalå”¤é†’thread2
+*	ï¼Œthread2åˆ¤å®šièƒ½è¢«ä¸‰æ•´é™¤ï¼Œåˆ™ä¸è¿›å…¥ifåˆ¤
+*	æ–­è¯­å¥æ‰§è¡Œprintfå‡½æ•°ï¼Œç„¶åŽi++åŽå†è¿›è¡Œ
+*	åˆ¤å®šï¼Œè¿™æ¬¡åˆ¤å®šiä¸èƒ½è¢«3æ•´é™¤ï¼Œè¿›å…¥ifï¼Œè°ƒ
+*	ç”¨waitç­‰å¾…thread1å”¤é†’ï¼Œä¸æ‰§è¡Œthread2åŽ
+*	çš„printfè¯­å¥ã€‚thread1å”¤é†’åŽï¼Œè¿›è¡Œåˆ¤æ–­
+* 	ï¼Œièƒ½è¢«3æ•´é™¤ï¼Œè¿›å…¥ifï¼Œè°ƒç”¨signalå”¤é†’
+*	thread2ï¼Œä»¥æ­¤å¾ªçŽ¯ã€‚
+* é™„å½•ï¼š
+*	//æ¡ä»¶å˜é‡å’Œäº’æ–¥é”çš„åˆå§‹åŒ–ã€é”€æ¯ã€åŠ é”ã€è§£é”ã€æ¡ä»¶å˜é‡çš„åˆå§‹åŒ–ã€é”€æ¯ã€å”¤é†’ã€ç­‰å¾…
 *	pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 *	pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
 * 
-*	//Ìõ¼þ±äÁ¿ºÍ»¥³âËøµÄÊÍ·Å
+*	//æ¡ä»¶å˜é‡å’Œäº’æ–¥é”çš„é‡Šæ”¾
 *	pthread_mutex_destroy(&mutex);
 *	pthread_cond_destroy(&cond);
 * 
-*	//Ìõ¼þ±äÁ¿ºÍ»¥³âËøµÄ¼ÓËø
+*	//æ¡ä»¶å˜é‡å’Œäº’æ–¥é”çš„åŠ é”
 *	pthread_cond_signal(&cond);
 * 
-*	//Ìõ¼þ±äÁ¿ºÍ»¥³âËøµÄ½âËø
+*	//æ¡ä»¶å˜é‡å’Œäº’æ–¥é”çš„è§£é”
 *	pthread_cond_wait(&cond);
 *****************************************/
 
@@ -57,16 +57,16 @@ void* thread1(void* arg)
 {
 	for (i = 1; i <= 20; i++)
 	{
-		pthread_mutex_lock(&mutex);		//Ëø×¡»¥³âËø
+		pthread_mutex_lock(&mutex);		//é”ä½äº’æ–¥é”
 		if (i % 3 == 0)
 		{
-			pthread_cond_signal(&cond);		//»½ÐÑµÈ´ýÌõ¼þ±äÁ¿condÏß³Ì
+			pthread_cond_signal(&cond);		//å”¤é†’ç­‰å¾…æ¡ä»¶å˜é‡condçº¿ç¨‹
 		}
 		else
 		{
-			printf("thread1:%d\n", i);		//´òÓ¡²»ÄÜÕû³ý3µÄi
+			printf("thread1:%d\n", i);		//æ‰“å°ä¸èƒ½æ•´é™¤3çš„i
 		}
-		pthread_mutex_unlock(&mutex);		//½âËø»¥³âËø
+		pthread_mutex_unlock(&mutex);		//è§£é”äº’æ–¥é”
 		sleep(1);
 	}
 }
@@ -78,9 +78,11 @@ void* thread2(void* arg)
 		pthread_mutex_lock(&mutex);
 		if (i % 3 != 0)
 		{
-			pthread_cond_wait(&cond, &mutex);		//µÈ´ýÌõ¼þ±äÁ¿cond
+			/*è°ƒç”¨æ—¶éœ€è¦é‡Šæ”¾ä¸€ä¸ªå·²ç»ä¸Šé”çš„é”ï¼›
+			æ”¶åˆ°ä¿¡å·è¿”å›žæ—¶åˆ™éœ€è¦å¯¹ä¸€ä¸ªæœªä¸Šé”çš„äº’æ–¥é”ä¸Šé”*/
+			pthread_cond_wait(&cond, &mutex);		//ç­‰å¾…æ¡ä»¶å˜é‡cond
 		}
-		printf("----------------thread2:%d\n", i);		//¸Ã´úÂë±»waitº¯Êý×èÈûºó²»Ö´ÐÐ£¬Ö±µ½thread1·¢ËÍsignalÐÅºÅ»½ÐÑthread2ºóÔÙÖ±½ÓÖ´ÐÐ¸Ã´úÂë
+		printf("----------------thread2:%d\n", i);		//è¯¥ä»£ç è¢«waitå‡½æ•°é˜»å¡žåŽä¸æ‰§è¡Œï¼Œç›´åˆ°thread1å‘é€signalä¿¡å·å”¤é†’thread2åŽå†ç›´æŽ¥æ‰§è¡Œè¯¥ä»£ç 
 		pthread_mutex_unlock(&mutex);
 		sleep(1);
 		i++;
